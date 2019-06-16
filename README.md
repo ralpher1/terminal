@@ -17,15 +17,33 @@ Project|Build Status
 Terminal|[![Build Status](https://dev.azure.com/ms/Terminal/_apis/build/status/Terminal%20CI?branchName=master)](https://dev.azure.com/ms/Terminal/_build?definitionId=136)
 ColorTool|![](https://microsoft.visualstudio.com/_apis/public/build/definitions/c93e867a-8815-43c1-92c4-e7dd5404f1e1/17023/badge)
 
-# Terminal & Console Overview
-
-Please take a few minutes to review the overview below before diving into the code:
 
 ## Windows Terminal
 
 Windows Terminal is a new, modern, feature-rich, productive terminal application for command-line users. It includes many of the features most frequently requested by the Windows command-line community including support for tabs, rich text, globalization, configurability, theming & styling, and more.
 
 The Terminal will also need to meet our goals and measures to ensure it remains fast, and efficient, and doesn't consume vast amounts of memory or power.
+  * Michael Niksa, Senior Developer: [@michaelniksa](https://twitter.com/MichaelNiksa)
+
+  Program Manager (especially for UX issues): [@cinnamon\_msft](https://twitter.com/cinnamon_msft)
+
+
+
+## Building the Code
+
+This repository uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for some of its dependencies. To make sure submodules are restored or updated, be sure to run the following prior to building:
+
+```shell
+git submodule update --init --recursive
+```
+
+OpenConsole.sln may be built from within Visual Studio or from the command-line using MSBuild. To build from the command line, find your shell below.
+
+
+# Terminal & Console Overview
+
+Please take a few minutes to review the overview below before diving into the code:
+
 
 ## The Windows console host
 
@@ -35,13 +53,14 @@ Console's primary goal is to remain backwards-compatible with existing console s
 
 Since assuming ownership of the Windows command-line in 2014, the team has added several new features to the Console, including window transparency, line-based selection, support for [ANSI / Virtual Terminal sequences](https://en.wikipedia.org/wiki/ANSI_escape_code), [24-bit color](https://devblogs.microsoft.com/commandline/24-bit-color-in-the-windows-console/), a [Pseudoconsole ("ConPTY")](https://devblogs.microsoft.com/commandline/windows-command-line-introducing-the-windows-pseudo-console-conpty/), and more.
 
+## Shared Components
+
+While overhauling the Console, we've modernized its codebase considerably. We've cleanly separated logical entities into modules and classes, introduced some key extensibility points, replaced several old, home-grown collections and containers with safer, more efficient [STL containers](https://docs.microsoft.com/en-us/cpp/standard-library/stl-containers?view=vs-2019), and made the code simpler and safer by using Microsoft's [WIL](https://github.com/Microsoft/wil) header library.
+
 However, because the Console's primary goal is to maintain backward compatibility, we've been unable to add many of the features the community has been asking for, and which we've been wanting to add for the last several years--like tabs!
 
 These limitations led us to create the new Windows Terminal.
 
-## Shared Components
-
-While overhauling the Console, we've modernized its codebase considerably. We've cleanly separated logical entities into modules and classes, introduced some key extensibility points, replaced several old, home-grown collections and containers with safer, more efficient [STL containers](https://docs.microsoft.com/en-us/cpp/standard-library/stl-containers?view=vs-2019), and made the code simpler and safer by using Microsoft's [WIL](https://github.com/Microsoft/wil) header library.
 
 This overhaul work resulted in the creation of several key components that would be useful for any terminal implementation on Windows, including a new DirectWrite-based text layout and rendering engine, a text buffer capable of storing both UTF-16 and UTF-8, and a VT parser/emitter.
 
@@ -122,21 +141,7 @@ If you would like to ask a question that you feel doesn't warrant an issue (yet)
 
   * Dustin Howett, Engineering Lead: [@dhowett](https://twitter.com/DHowett)
   
-  * Michael Niksa, Senior Developer: [@michaelniksa](https://twitter.com/MichaelNiksa)
 
-  * Kayla Cinnamon, Program Manager (especially for UX issues): [@cinnamon\_msft](https://twitter.com/cinnamon_msft)
-
-# Developer Guidance
-
-## Building the Code
-
-This repository uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for some of its dependencies. To make sure submodules are restored or updated, be sure to run the following prior to building:
-
-```shell
-git submodule update --init --recursive
-```
-
-OpenConsole.sln may be built from within Visual Studio or from the command-line using MSBuild. To build from the command line, find your shell below.
 
 ### PowerShell
 
